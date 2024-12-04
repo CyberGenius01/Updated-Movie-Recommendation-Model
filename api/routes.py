@@ -14,7 +14,7 @@ movies = default_movies
 
 headers = {
     'content-type': "application/json",
-    'authorization': "apikey 0t3CYK8PNq6fJYBC7QGYf7:3orYSTrplVGBATYB3FOEVX"
+    'authorization': "YOUR KEY"
 }
 
 movies_lock = threading.Lock()
