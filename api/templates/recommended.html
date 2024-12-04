@@ -23,22 +23,25 @@
     {%- set ns.count = ns.count + 1 -%}
     {%- endfor -%}
     <script>
-        let temp = 1
+        let intervalId = null; // Variable to store the interval ID
+
         function pollTaskStatus() {
-            setInterval(function () {
+            intervalId = setInterval(function () {
                 $.get('/task-status', function (data) {
                     if (data.completed) {
-                        location.reload();
-                        temp = 0;
+                        clearInterval(intervalId); // Stop polling
+                        location.reload(); // Reload the page
                     }
+                }).fail(function () {
+                    console.error("Failed to fetch task status");
+                    clearInterval(intervalId); // Stop polling on failure
                 });
             }, 6000);
         }
-        if (temp) {
-            $(document).ready(function () {
-                pollTaskStatus();
-            });
-        }
+        
+        $(document).ready(function () {
+            pollTaskStatus();
+        });
     </script>
 </div>
 {%- endblock -%}
